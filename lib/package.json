@@ -1,0 +1,12 @@
+{
+    "name": "socketio-chat"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "express": "2.5.5"
+    , "jade": ">= 0.0.1"
+    , "socket.io": "0.9.5"
+    , "azure": "0.5.2"
+    , "cookie-sessions": "0.0.2"
+  }
+}
