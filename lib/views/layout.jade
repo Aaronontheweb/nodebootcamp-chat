@@ -7,4 +7,14 @@ html
         include partials/styles
     block scripts
         script(src='/javascripts/jquery-1.7.1.min.js')
-  body!= body
+  body
+      .container
+            .row.display
+                .twelve.columns
+                    a(href='/')
+                        h1 Node Bootcamp Chat
+            !{body}
+            .row
+                .twelve.columns
+                    footer
+                        Docent

@@ -1,2 +1,12 @@
-h1= title
-p Welcome to #{title}
+#chatarea.row.display
+    h3= title   
+    .eight.columns
+        ul#chatmessages
+    .four.columns
+        ul#users
+.row.display
+    form#sendmessage(method='post', action='#', class='nice')
+        .six.columns
+            textarea(class='oversize expand input-text', rows='2', name='message[body]', id='message.body', required)
+        .two.columns.pull-four
+            input(type="submit", value="Send", class='nice small radius blue button')

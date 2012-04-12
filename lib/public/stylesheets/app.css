@@ -13,8 +13,30 @@
 /* -----------------------------------------
    Shared Styles
 ----------------------------------------- */
+body{
+    background-color:#F3F3F3;
+}
 
+.messages{
+    width: 70%;
+    border: 1px solid #CCC;
+    overflow: auto;
+    margin-left: 0px;
+    margin-top: 0px;
+    padding-left: 0px;
+    position: absolute;
+    top: 55px;
+    bottom: 70px;
+    background-color: white;
+}
 
+#chatarea{
+    top: 95px;
+    bottom: 10px;
+    left: 30px;
+    right: 10px;
+    min-height: 450px;
+}
 
 /* -----------------------------------------
    Page Name 1
