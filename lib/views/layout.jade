@@ -1,6 +1,10 @@
-!!!
+!!! 5
 html
-  head
+    head
+    meta(name="viewport", content="width=device-width")
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    block styles
+        include partials/styles
+    block scripts
+        script(src='/javascripts/jquery-1.7.1.min.js')
   body!= body
