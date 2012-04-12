@@ -5,8 +5,8 @@ form(action='/user/login', method='post', class='nice')
     - each error in errors
       li.red= error
   #login.form-field-error
-    label(for=chatHandle) Login
-    input(type='text', name=chatHandle, class='oversize input-text', required)
+    label(for="chatHandle") Login
+    input(type='text', name="chatHandle", class='oversize input-text', required)
     input(type='hidden', name='redir', value=redir)
   #submit
     input(type='submit', value='Join Chat', class='nice small radius blue button') Join Chat
