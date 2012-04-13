@@ -36,9 +36,10 @@ body{
 ul#chat{
     background-color:white;
     min-height:450px;
+    max-height:450px;
     margin-left:0px;
     padding-left:0px;
-    overflow: auto;
+    overflow: scroll;
     border: 1px solid #CCC;
 }
 
