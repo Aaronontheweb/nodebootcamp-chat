@@ -1,8 +1,8 @@
 #chatarea.row.display
     h3= title   
     .eight.columns
-        ul#chatmessages(data-bind="foreach: messages")
-            li
+        ul#chatmessages
+            lid(data-bind="foreach: messages")
                 span(data-bind="text: author", style="font-weight:bold;")
                 [
                 span(data-bind="text: timestamp")
@@ -10,15 +10,15 @@
                 span(data-bind="text: text")
 
     .four.columns
-        ul#users(data-bind="foreach: users")
-            li
+        ul#users
+            li(data-bind="foreach: users")
                 span(data-bind="text: username", style="font-weight:bold;")
 .row.display
-    form#sendmessage(method='post', action='#', class='nice')
+    form#sendmessage(method='post', action='#', class='nice', data_bind="submit: addComment")
         .six.columns
-            textarea(class='oversize expand input-text', rows='2', name='message[body]', id='message.body', required)
+            textarea(class='oversize expand input-text', rows='2', name='message[body]', id='message-body', required)
         .two.columns.pull-four
-            input(type="submit", value="Send", class='nice small radius blue button')
+            input(type="submit", value="Send", id='data-send', class='nice small radius blue button')
 
 block append scripts
     script(src="/socket.io/socket.io.js")
@@ -40,15 +40,15 @@ block append scripts
             self.users = ko.observableArray([]);
             self.messages = ko.observableArray([]);
 
-            self.addMessage(data){
+            self.addMessage = function(data){
                 self.messages.push(new Message(data));
             }
 
-            self.addUser(data){
+            self.addUser = function(data){
                 self.users.push(new User(data));
             }
 
-            self.removeUser(userid){
+            self.removeUser = function(userid){
                 delete users[userid];
             }
         }
@@ -57,9 +57,11 @@ block append scripts
 
         ko.applyBindings(chatModel);
 
+        var socket = io.connect();
+
         socket.on('connect', function(){
         // call the server-side function 'adduser' and send one parameter (value of prompt)
-            socket.emit('newuser', #{session.username});
+            socket.emit('newuser', '#{session.userName}');
         });
 
         // listener, whenever the server emits 'updatechat', this updates the chat body
@@ -74,4 +76,23 @@ block append scripts
 
         socket.on('removeuser', function(userid){
             chatModel.removeUser(userid);
+        });
+
+        // on load of page
+        $(function(){
+            // when the client clicks SEND
+            $('#data-send').click( function() {
+              var message = $('#message-body').val();
+              $('#message-body').val('');
+              // tell server to execute 'sendchat' and send along one parameter
+              socket.emit('sendchat', message);
+            });
+
+            // when the client hits ENTER on their keyboard
+            $('#message-body').keypress(function(e) {
+              if(e.which == 13) {
+                $(this).blur();
+                $('#data-send').focus().click();
+              }
+            });
         });
