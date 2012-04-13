@@ -53,22 +53,25 @@ block append scripts
             }
         }
 
-        ko.applyBindings(new ChatViewModel());
+        var chatModel = new ChatViewModel();
+
+        ko.applyBindings(chatModel);
 
         socket.on('connect', function(){
         // call the server-side function 'adduser' and send one parameter (value of prompt)
-            socket.emit('adduser', prompt("What's your name?"));
+            socket.emit('newuser', #{session.username});
         });
 
         // listener, whenever the server emits 'updatechat', this updates the chat body
-        socket.on('updatechat', function (username, data) {
-            $('#conversation').append('<li><b>'+username + ':</b> ' + data + '</li>');
+        socket.on('updatechat', function (data) {
+            chatModel.addMessage(data);
         });
 
         // listener, whenever the server emits 'updateusers', this updates the username list
-        socket.on('updateusers', function(data) {
-            $('#users').empty();
-            $.each(data, function(key, value) {
-              $('#users').append('<div>' + key + '</div>');
-            });
+        socket.on('adduser', function(data) {
+            chatModel.addUser(data);
+        });
+
+        socket.on('removeuser', function(userid){
+            chatModel.removeUser(userid);
         });
