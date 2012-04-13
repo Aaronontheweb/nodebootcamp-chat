@@ -2,7 +2,7 @@
     h3= title   
     .eight.columns
         ul#chatmessages
-            lid(data-bind="foreach: messages")
+            li(data-bind="foreach: messages")
                 span(data-bind="text: author", style="font-weight:bold;")
                 [
                 span(data-bind="text: timestamp")
@@ -18,7 +18,7 @@
         .six.columns
             textarea(class='oversize expand input-text', rows='2', name='message[body]', id='message-body', required)
         .two.columns.pull-four
-            input(type="submit", value="Send", id='data-send', class='nice small radius blue button')
+            input(type="button", value="Send", id='data-send', class='nice small radius blue button')
 
 block append scripts
     script(src="/socket.io/socket.io.js")
