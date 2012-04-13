@@ -3,9 +3,10 @@
     .eight.columns(style="right:4.5%")
         ul#chat(data-bind="foreach: messages")
             li.message
-                span(data-bind="text: author", style="font-weight:bold;")
+                span(data-bind="text: author", style="font-weight:bold;width:200px;")
+                &nbsp;
                 span(data-bind="text: text")
-                span(data-bind="text: timestamp", style="text-align:right;")
+                span(data-bind="text: timestamp", style="text-align:right;float:right;margin-right:10px;font-color:#E0E0E0;")
 
     .three.columns
         ul#users(data-bind="foreach: users")
@@ -24,7 +25,7 @@ block append scripts
     script(type="text/javascript")
         function Message(data){
             this.author = ko.observable(data.author);
-            this.timestamp = ko.observable(dateFormat(parseInt(data.timestamp.substr(6)), "m/d/yyyy h:MM TT"));
+            this.timestamp = ko.observable(dateFormat(data.timestamp, "m/d/yyyy h:MM TT"));
             this.text = ko.observable(data.text);
         }
 
