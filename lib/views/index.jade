@@ -1,15 +1,13 @@
 #chatarea.row.display
     h3= title   
-    .eight.columns
-        ul#chatmessages(data-bind="foreach: messages")
-            li
+    .eight.columns(style="right:4.5%")
+        ul#chat(data-bind="foreach: messages")
+            li.message
                 span(data-bind="text: author", style="font-weight:bold;")
-                [
-                span(data-bind="text: timestamp")
-                ]:&nbsp;
                 span(data-bind="text: text")
+                span(data-bind="text: timestamp", style="text-align:right;")
 
-    .four.columns
+    .three.columns
         ul#users(data-bind="foreach: users")
             li
                 span(data-bind="text: username", style="font-weight:bold;")
@@ -21,11 +19,12 @@
             input(type="button", value="Send", id='data-send', class='nice small radius blue button')
 
 block append scripts
+    script(src="/javascripts/dateformat.js")
     script(src="/socket.io/socket.io.js")
     script(type="text/javascript")
         function Message(data){
             this.author = ko.observable(data.author);
-            this.timestamp = ko.observable(data.timestamp);
+            this.timestamp = ko.observable(dateFormat(parseInt(data.timestamp.substr(6)), "m/d/yyyy h:MM TT"));
             this.text = ko.observable(data.text);
         }
 
