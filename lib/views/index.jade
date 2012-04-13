@@ -10,3 +10,6 @@
             textarea(class='oversize expand input-text', rows='2', name='message[body]', id='message.body', required)
         .two.columns.pull-four
             input(type="submit", value="Send", class='nice small radius blue button')
+
+block append scripts
+    include partials/socketio
