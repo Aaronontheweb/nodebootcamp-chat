@@ -1,8 +1,8 @@
 #chatarea.row.display
     h3= title   
     .eight.columns
-        ul#chatmessages
-            li(data-bind="foreach: messages")
+        ul#chatmessages(data-bind="foreach: messages")
+            li
                 span(data-bind="text: author", style="font-weight:bold;")
                 [
                 span(data-bind="text: timestamp")
@@ -10,8 +10,8 @@
                 span(data-bind="text: text")
 
     .four.columns
-        ul#users
-            li(data-bind="foreach: users")
+        ul#users(data-bind="foreach: users")
+            li
                 span(data-bind="text: username", style="font-weight:bold;")
 .row.display
     form#sendmessage(method='post', action='#', class='nice', data_bind="submit: addComment")
