@@ -15,7 +15,7 @@
 .row.display
     form#sendmessage(method='post', action='#', class='nice', data_bind="submit: addComment")
         .six.columns
-            textarea(class='oversize expand input-text', rows='2', name='message[body]', id='message-body', required)
+            textarea(class='oversize expand input-text', rows='1', name='message[body]', id='message-body', required)
         .two.columns.pull-four
             input(type="button", value="Send", id='data-send', class='nice small radius blue button')
 
@@ -91,8 +91,13 @@ block append scripts
             // when the client hits ENTER on their keyboard
             $('#message-body').keypress(function(e) {
               if(e.which == 13) {
-                $(this).blur();
-                $('#data-send').focus().click();
+                e.preventDefault();
+                if($(this).val().length > 0){
+                    $(this).blur();
+                    $('#data-send').focus().click();
+                    $(this).val(null);
+                    $(this).focus();
+                }
               }
             });
         });
