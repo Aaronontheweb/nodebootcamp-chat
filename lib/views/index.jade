@@ -1,9 +1,18 @@
 #chatarea.row.display
     h3= title   
     .eight.columns
-        ul#chatmessages
+        ul#chatmessages(data-bind="foreach: messages")
+            li
+                span(data-bind="text: author", style="font-weight:bold;")
+                [
+                span(data-bind="text: timestamp")
+                ]:&nbsp;
+                span(data-bind="text: text")
+
     .four.columns
-        ul#users
+        ul#users(data-bind="foreach: users")
+            li
+                span(data-bind="text: username", style="font-weight:bold;")
 .row.display
     form#sendmessage(method='post', action='#', class='nice')
         .six.columns
@@ -12,4 +21,54 @@
             input(type="submit", value="Send", class='nice small radius blue button')
 
 block append scripts
-    include partials/socketio
+    script(src="/socket.io/socket.io.js")
+    script(type="text/javascript")
+        function Message(data){
+            this.author = ko.observable(data.author);
+            this.timestamp = ko.observable(data.timestamp);
+            this.text = ko.observable(data.text);
+        }
+
+        function User(data){
+            this.username = ko.observable(data.username);
+        }
+
+        function ChatViewModel() {
+            //Data
+            var self = this;
+            
+            self.users = ko.observableArray([]);
+            self.messages = ko.observableArray([]);
+
+            self.addMessage(data){
+                self.messages.push(new Message(data));
+            }
+
+            self.addUser(data){
+                self.users.push(new User(data));
+            }
+
+            self.removeUser(userid){
+                delete users[userid];
+            }
+        }
+
+        ko.applyBindings(new ChatViewModel());
+
+        socket.on('connect', function(){
+        // call the server-side function 'adduser' and send one parameter (value of prompt)
+            socket.emit('adduser', prompt("What's your name?"));
+        });
+
+        // listener, whenever the server emits 'updatechat', this updates the chat body
+        socket.on('updatechat', function (username, data) {
+            $('#conversation').append('<li><b>'+username + ':</b> ' + data + '</li>');
+        });
+
+        // listener, whenever the server emits 'updateusers', this updates the username list
+        socket.on('updateusers', function(data) {
+            $('#users').empty();
+            $.each(data, function(key, value) {
+              $('#users').append('<div>' + key + '</div>');
+            });
+        });
