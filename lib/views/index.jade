@@ -67,6 +67,7 @@ block append scripts
         // listener, whenever the server emits 'updatechat', this updates the chat body
         socket.on('updatechat', function (data) {
             chatModel.addMessage(data);
+            $('#chat').scrollTop(9000);
         });
 
         // listener, whenever the server emits 'updateusers', this updates the username list
