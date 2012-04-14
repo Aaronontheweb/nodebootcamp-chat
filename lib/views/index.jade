@@ -51,6 +51,12 @@ block append scripts
             self.removeUser = function(userid){
                 delete users[userid];
             }
+
+            self.loadUsers = function(users){
+                $.each(users, function(key, value){
+                    self.addUser(value);
+                });
+            }
         }
 
         var chatModel = new ChatViewModel();
