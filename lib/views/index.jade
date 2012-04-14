@@ -57,6 +57,12 @@ block append scripts
                     self.addUser(value);
                 });
             }
+
+            self.loadMessages = function(messages){
+                $.each(messages, function(key, value){
+                    self.addMessage(value);
+                });
+            }
         }
 
         var chatModel = new ChatViewModel();
@@ -72,7 +78,11 @@ block append scripts
 
         socket.on('loadusers', function(data){
             chatModel.loadUsers(data);
-            console.log(data);
+        });
+
+        socket.on('loadmessages', function(data){
+            chatModel.loadMessages(data);
+            $('#chat').scrollTop(9000);
         });
 
         // listener, whenever the server emits 'updatechat', this updates the chat body
