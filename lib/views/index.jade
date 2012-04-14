@@ -70,6 +70,11 @@ block append scripts
             socket.emit('newuser', '#{session.userName}');
         });
 
+        socket.on('loadusers', function(data){
+            chatModel.loadUsers(data);
+            console.log(data);
+        });
+
         // listener, whenever the server emits 'updatechat', this updates the chat body
         socket.on('updatechat', function (data) {
             chatModel.addMessage(data);
