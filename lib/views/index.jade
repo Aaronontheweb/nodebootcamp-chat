@@ -49,7 +49,7 @@ block append scripts
             }
 
             self.removeUser = function(userid){
-                delete users[userid];
+                self.users.remove(function(item) { return item.username == userid; });
             }
 
             self.loadUsers = function(users){
